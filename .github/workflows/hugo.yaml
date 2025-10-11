@@ -52,6 +52,14 @@ jobs:
       - name: Build Web
         run: hugo
 
+      # 新增步骤：替换图片路径
+      - name: Fix image paths
+        run: |
+          # 在public目录下所有HTML文件中替换图片路径
+          # 将../../../Asset替换为../../../../Asset
+          find ./public -type f -name "*.html" -exec sed -i 's/\.\.\/\.\.\/\.\.\/Asset/\.\.\/\.\.\/\.\.\/\.\.\/Asset/g' {} +
+          echo "图片路径替换完成"
+
       - name: Deploy Web
         uses: peaceiris/actions-gh-pages@v3
         with:
